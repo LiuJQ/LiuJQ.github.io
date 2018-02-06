@@ -2,15 +2,16 @@
 <html>
 	<head>
 		<title>{{ page.title }}</title>
-		<link rel="stylesheet" type="text/css" href="../css/home.css">
+		{% include base.html %}
+		<link rel="stylesheet" type="text/css" href="{{base}}/assets/css/default.css">
 	</head>
 	<body>
 		<nav>
 	    		<ul>
-        			<li><a href="/">Home</a></li>
-	        		<li><a href="/about">About</a></li>
-        			<li><a href="/cv">CV</a></li>
-        			<li><a href="/blog">Blog</a></li>
+        			<li><a href="{{base}}">Home</a></li>
+	        		<li><a href="{{base}}/about">About</a></li>
+        			<li><a href="{{base}}/cv">CV</a></li>
+        			<li><a href="{{base}}/blog">Blog</a></li>
     			</ul>
 		</nav>
 

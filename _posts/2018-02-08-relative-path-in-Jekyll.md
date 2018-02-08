@@ -32,16 +32,15 @@
 ### 更好的解决方案
 &emsp;&emsp;根据页面路径URL动态计算style.css文件的层级并将对应的父目录层级保存在一个JavaScript变量中，在其他需要引用style.css文件的HTML页面中引用这个变量即可。
 #### step 1
-```javascript
-<!-- _includes/base.html -->
-{% assign base = '' %}
-{% assign depth = page.url | split: '/' | size %}
-{% if    depth <= 1 %}{% assign base = '.' %}
-{% elsif depth == 2 %}{% assign base = '..' %}
-{% elsif depth == 3 %}{% assign base = '../..' %}
-{% elsif depth == 4 %}{% assign base = '../../..' %}
-{% endif %}
-```
+  <!-- _includes/base.html -->
+  {% assign base = '' %}
+  {% assign depth = page.url | split: '/' | size %}
+  {% if    depth <= 1 %}{% assign base = '.' %}
+  {% elsif depth == 2 %}{% assign base = '..' %}
+  {% elsif depth == 3 %}{% assign base = '../..' %}
+  {% elsif depth == 4 %}{% assign base = '../../..' %}
+  {% endif %}
+
 &emsp;&emsp;在_includes文件夹下新建base.html文件，加入上面这段JavaScript代码，然后在你的layout模板HTML文件里面引入_includes/base.html文件。引用方法如下：
 
 ```javascript

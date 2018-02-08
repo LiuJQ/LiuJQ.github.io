@@ -3,7 +3,6 @@
 
 ### 问题根源
 ```html
-
 <!-- _layouts/default.html -->
 <link href='assets/css/style.css' rel='stylesheet'>
 ```
@@ -21,7 +20,6 @@
 ### 解决方案
 &emsp;&emsp;一个简单的解决方案：
 ```html
-
 <link href='/assets/style.css' rel='stylesheet'>
 ```
 &emsp;&emsp;当你的个人博客工程放在站点主目录 user.github.io/ 时（以Github Pages为例，下同），这个解决方案是可行的，可一旦你尝试把个人博客工程移动到其他目录（比如，user.github.io/project/）时，就得不到你期望的路径 /project/assets/css/style.css 了。
@@ -35,7 +33,6 @@
 &emsp;&emsp;根据页面路径URL动态计算style.css文件的层级并将对应的父目录层级保存在一个JavaScript变量中，在其他需要引用style.css文件的HTML页面中引用这个变量即可。
 #### step 1
 ```javascript
-
 <!-- _includes/base.html -->
 {% assign base = '' %}
 {% assign depth = page.url | split: '/' | size %}
@@ -48,7 +45,6 @@
 &emsp;&emsp;在_includes文件夹下新建base.html文件，加入上面这段JavaScript代码，然后在你的layout模板HTML文件里面引入_includes/base.html文件。引用方法如下：
 
 ```javascript
-
 <head>
 ...
 {% include base.html %}
@@ -59,7 +55,6 @@
 #### step 2
 &emsp;&emsp;在其他页面中，加入base变量的引用即可。
 ```html
-
 <a href='{{ base }}'>Back to home</a>
 <a href='{{ base }}/about.html'>About me</a>
 <a href='{{ base }}{{ post.url }}'>Read "{{ post.title }}"</a>

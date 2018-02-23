@@ -2,7 +2,6 @@
 layout: post
 title: 浅谈Jekyll中的相对路径
 tags: [Jekyll, 相对路径]
-thumbnail: assets/img/pexels/computer.jpeg
 ---
 
 &emsp;&emsp;Jekyll是一个伟大的静态网站工具，如果你正在使用GitHub Pages来维护公共博客或个人网站，它将会是一个非常有用的免费工具。但是，使用Jekyll需要注意一个问题——相对路径，该问题暂时还未有一个好的解决方案。

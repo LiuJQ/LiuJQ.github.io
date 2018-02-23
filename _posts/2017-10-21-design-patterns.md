@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 设计模式概要
-tags: [Java, 设计模式，最佳实践]
+tags: [Java, 设计模式, 最佳实践]
 ---
 
 ## 目录

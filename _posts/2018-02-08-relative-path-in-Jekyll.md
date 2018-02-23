@@ -25,14 +25,14 @@ tags: [Jekyll, 相对路径]
 ### 解决方案
 &emsp;&emsp;一个简单的解决方案：
 ```html
-<link href='/assets/style.css' rel='stylesheet'>
+<link href='/assets/css/style.css' rel='stylesheet'>
 ```
 &emsp;&emsp;当你的个人博客工程放在站点主目录 user.github.io/ 时（以Github Pages为例，下同），这个解决方案是可行的，可一旦你尝试把个人博客工程移动到其他目录（比如，user.github.io/project/）时，就得不到你期望的路径 /project/assets/css/style.css 了。
 
 | 博客工程目录 | 解析路径     | 样式是否渲染 |
 | :------------- | :------------- | :-------------: |
-| user.github.io/       | /assets/style.css       | 是 |
-| user.github.io/project       | /assets/style.css       | 否 |
+| user.github.io/       | /assets/css/style.css       | 是 |
+| user.github.io/project       | /assets/css/style.css       | 否 |
 
 ### 更好的解决方案
 &emsp;&emsp;根据页面路径URL动态计算style.css文件的层级并将对应的父目录层级保存在一个JavaScript变量中，在其他需要引用style.css文件的HTML页面中引用这个变量即可。
@@ -54,14 +54,14 @@ tags: [Jekyll, 相对路径]
 ```html
 <head>
 ...
-<link href='{{base}}/assets/css/style.css' rel='stylesheet'>
+<link href="{{ base }}/assets/css/style.css" rel='stylesheet'>
 ...
 </head>
 ```
 #### step 2
 &emsp;&emsp;在其他页面中，加入base变量的引用即可。
 ```html
-<a href='{{ base }}'>Back to home</a>
-<a href='{{ base }}/about.html'>About me</a>
-<a href='{{ base }}{{ post.url }}'>Read "{{ post.title }}"</a>
+<a href="{{ base }}">Back to home</a>
+<a href="{{ base }}/about.html">About me</a>
+<a href="{{ base }}{{ post.url }}">Read "{{ post.title }}"</a>
 ```

@@ -38,8 +38,8 @@ tags: [Jekyll, 相对路径]
 &emsp;&emsp;根据页面路径URL动态计算style.css文件的层级并将对应的父目录层级保存在一个JavaScript变量中，在其他需要引用style.css文件的HTML页面中引用这个变量即可。
 #### step 1
 
-```html
-<!-- _includes/base.html -->
+```JavaScript
+<!- _includes/base.html ->
 {% assign base = '' %}
 {% assign depth = page.url | split: '/' | size %}
 {% if    depth <= 1 %}{% assign base = '.' %}
@@ -54,6 +54,7 @@ tags: [Jekyll, 相对路径]
 ```html
 <head>
 ...
+<!- {% include base.html %} ->
 <link href="{{ base }}/assets/css/style.css" rel='stylesheet'>
 ...
 </head>

@@ -39,7 +39,6 @@ tags: [Jekyll, 相对路径]
 #### step 1
 
 ```JavaScript
-<!- _includes/base.html ->
 {% assign base = '' %}
 {% assign depth = page.url | split: '/' | size %}
 {% if    depth <= 1 %}{% assign base = '.' %}
@@ -54,7 +53,6 @@ tags: [Jekyll, 相对路径]
 ```html
 <head>
 ...
-<!- {% include base.html %} ->
 <link href="{{ base }}/assets/css/style.css" rel='stylesheet'>
 ...
 </head>

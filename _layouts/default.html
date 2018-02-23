@@ -1,30 +1,11 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		{% include base.html %}
-		<title>{{ page.title }}</title>
-		<link rel="stylesheet" type="text/css" href="{{ base }}/assets/css/default.css">
-	</head>
-	<body>
-		<nav>
-	    		<ul>
-        			<li><a href="{{ base }}">Home</a></li>
-	        		<li><a href="{{ base }}/about">About</a></li>
-        			<li><a href="{{ base }}/cv">CV</a></li>
-        			<li><a href="{{ base }}/blog">Blog</a></li>
-    			</ul>
-		</nav>
-
-		<div class="container">
-    			{{ content }}
-		</div><!-- /.container -->
-
-		<footer>
-    			<ul>
-        			<li><a href="mailto:liujianqiao39870@gmail.com">My Email</a></li>
-        			<li><a href="https://github.com/liujq">My Github</a></li>
-				<li><a href="http://blog.csdn.net/jianqiao_liu">My CSDN</a></li>
-			</ul>
-		</footer>
-	</body>
+  {% include head.html %}
+  <body>
+    {% include navbar.html %}
+    <div class="content">
+      {{ content }}
+    </div>
+    {% include footer.html %}
+  </body>
 </html>

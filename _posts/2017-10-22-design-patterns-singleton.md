@@ -1,7 +1,7 @@
 ---
 layout: post
-title: 单例模式
-tags: [Java, 设计模式, 最佳实践, 单例模式]
+title: Design Patterns -- 单例模式
+tags: [Java, 设计模式, 最佳实践, 单例模式, Design Patterns]
 ---
 
 * [简介](#简介)

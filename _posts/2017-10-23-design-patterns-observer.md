@@ -1,7 +1,7 @@
 ---
 layout: post
-title: 观察者模式
-tags: [Java, 设计模式, 最佳实践, 观察者模式]
+title: Design Patterns -- 观察者模式
+tags: [Java, 设计模式, 最佳实践, 观察者模式, Design Patterns]
 ---
 
 * [简介](#简介)

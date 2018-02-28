@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Design Patterns -- 概要
-tags: [Java, 设计模式, 最佳实践, Design Patterns]
+tags: [Java, 设计模式, Design Patterns]
 ---
 
 ## 目录

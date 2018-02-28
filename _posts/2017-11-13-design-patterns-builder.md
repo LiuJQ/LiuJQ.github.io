@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Design Patterns -- 建造者模式
-tags: [Java, 设计模式, 最佳实践, 建造者模式, Design Patterns]
+tags: [Java, 设计模式, Design Patterns]
 ---
 
 &emsp;&emsp;介绍建造者（Builder）模式之前，让我们来看一个案例。

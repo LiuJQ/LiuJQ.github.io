@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Glide加载图片出现java.lang.IllegalStateException
-tags: [Android, Glide, IllegalStateException, recycled-bitmap]
+tags: [Android, Glide]
 ---
 
 ## Glide简介

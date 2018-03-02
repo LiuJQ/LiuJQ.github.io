@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Ubuntu 14.04 卸载ibus导致System Settings异常
-tags: [Ubuntu, ibus]
+tags: [Ubuntu]
 ---
 
 ### Uninstall ibus

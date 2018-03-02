@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 基于HTML5的ichartjs图表组件在Android中的应用
-tags: [Android, hybrid, ichartjs, HTML5, WebApp]
+tags: [Android, Hybrid, WebApp]
 feature-img: "assets/img/pexels/computer.jpeg"
 thumbnail: "assets/img/pexels/computer.jpeg"
 ---

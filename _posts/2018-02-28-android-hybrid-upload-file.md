@@ -88,4 +88,37 @@ protected void openFileInput(final ValueCallback<Uri> fileUploadCallbackFirst,
 }
 ```
 
-# 未完待续...
+### 返回图片
+&emsp;&emsp;从上面的代码可发现，调起选择图片页面的方式是startActivityForResult，因此图片Uri返回的处理应该在onActivityResult方法。那么针对Android 5.0以下版本，需要通过mFileUploadCallbackFirst来回调给前端，Android 5.0以上则需要通过mFileUploadCallbackSecond回调给前端，并且要注意Android 5.0以上有可能有多张图片的情况。
+```java
+@Override
+public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    if (requestCode == START_ACTIVITY_UPLOAD_FILE_REQUEST) {
+        if (resultCode == Activity.RESULT_OK) {
+            if (mFileUploadCallbackFirst != null) {
+                Uri photoUri = null;
+                // TODO 获取所选图片的Uri
+                // TODO 是否需要对图片作压缩处理？
+                mFileUploadCallbackFirst.onReceiveValue(photoUri);
+                mFileUploadCallbackFirst = null;
+            } else if (mFileUploadCallbackSecond != null) {
+                Uri[] photoUris = null;
+                // TODO 获取所选图片的Uri数组
+                // TODO 是否需要对所有图片作压缩处理？
+                mFileUploadCallbackSecond.onReceiveValue(photoUris);
+                mFileUploadCallbackSecond = null;
+            }
+        }
+    } else {
+        // 用户取消选择，也要回调给前端
+        if (mFileUploadCallbackFirst != null) {
+            mFileUploadCallbackFirst.onReceiveValue(null);
+            mFileUploadCallbackFirst = null;
+        } else if (mFileUploadCallbackSecond != null) {
+            mFileUploadCallbackSecond.onReceiveValue(null);
+            mFileUploadCallbackSecond = null;
+        }
+    }
+}
+```
+&emsp;&emsp;值得关注的是，很多时候用户选择图片是不会考虑图片大小的，因此带来的性能消耗也是不确定的，我们需要设计一套图片压缩算法，为图片上传功能带来更好的体验。图片的压缩可以参考之前的文章，我们讨论过Bitmap的加载优化，可以关注一下：[Android -- Bitmap加载性能优化](/_post/2018-02-27-android-bitmap-compress.md)

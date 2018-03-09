@@ -121,4 +121,4 @@ public void onActivityResult(int requestCode, int resultCode, Intent data) {
     }
 }
 ```
-&emsp;&emsp;值得关注的是，很多时候用户选择图片是不会考虑图片大小的，因此带来的性能消耗也是不确定的，我们需要设计一套图片压缩算法，为图片上传功能带来更好的体验。图片的压缩可以参考之前的文章，我们讨论过Bitmap的加载优化，可以关注一下：[Android -- Bitmap加载性能优化](/_post/2018-02-27-android-bitmap-compress.md)
+&emsp;&emsp;值得关注的是，很多时候用户选择图片是不会考虑图片大小的，因此带来的性能消耗也是不确定的，我们需要设计一套图片压缩算法，为图片上传功能带来更好的体验。图片的压缩可以参考之前的文章，我们讨论过Bitmap的加载优化，可以关注一下：[Android -- Bitmap加载性能优化]({{ site.baseurl }}{% post_url 2018-02-27-android-bitmap-compress %})

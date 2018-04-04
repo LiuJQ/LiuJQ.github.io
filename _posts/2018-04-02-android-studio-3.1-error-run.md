@@ -29,4 +29,4 @@ The APK file /xxx/xxx/app/build/outputs/apk/app-debug-unsign.apk does not exist 
   * 调整顺序，Gradle-aware Make上移到顶部
   * 点击Apply，应用配置变更
 
-![Android Studio 3.1 Error Installing APK](/assets/img/android_screenshots/20180402.png)
+![Android Studio 3.1 Error Installing APK](/assets/img/screenshots/20180402.png)

@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Android探究 -- 揭开多进程神秘面纱
+title: Android 多进程 -- 揭开神秘面纱
 subtitle: That moment when one Dalvik alone is no longer enough.
 tags: [Android, 多进程, Multi-Process]
 ---

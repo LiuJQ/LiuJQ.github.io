@@ -14,7 +14,7 @@ theme_settings:
   # Header and footer text
   header_text: > #two or three lines to describe your site
      <p>人生如戏，全靠演技</p>
-  header_text_feature_image: assets/img/pexels/triangular.jpeg
+  header_text_feature_image: assets/img/pexels/computer2.jpeg
   footer_text: Copyright 2018 Jackin 
    <p>Powered by <a href="https://jekyllrb.com/">Jekyll</a> with <a href="https://github.com/sylhare/Type-on-Strap">Type on Strap</a></p>
 

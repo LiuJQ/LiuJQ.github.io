@@ -62,4 +62,4 @@ android:process=":demo"
 &emsp;&emsp;四大组件传递Bundle，把需要传递的数据，用Intent封装起来传递即可。AIDL（Android Interface Definition Language）是Android提供给我们的标准跨进程通讯API，非常灵活且强大。Messenger是一种基于AIDL的轻量级IPC方案，在进程间传送Message对象从而实现进程间通讯。Message中可以传送Bundle对象，Bundle中可以传送我们实现了Parcelable接口的对象。使用Messenger不会出现并发读写问题，因为Messenger是以串行方式工作的，所以如果有大量的请求，不适合使用Messenger。
 
 ### 结语
-&emsp;&emsp;类似图片选择这样的多进程需求，可能并不需要我们额外编写进程通讯的代码，使用四大组件传输Bundle就行了，但是像推送服务这种需求，进程与进程之间需要高度的交互，此时就绕不过进程通讯这一步了。后续将会探讨使用AIDL实现多进程推送服务的需求。
+&emsp;&emsp;类似图片选择这样的多进程需求，可能并不需要我们额外编写进程通讯的代码，使用四大组件传输Bundle就行了，但是像消息推送服务这种需求，进程与进程之间需要高度的交互，此时就绕不过进程通讯这一步了。后续将会探讨使用AIDL实现多进程消息推送服务的需求。

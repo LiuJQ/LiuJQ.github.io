@@ -12,11 +12,14 @@ theme_settings:
   description: "A website with blog posts and pages" # used by search engines
 
   # Header and footer text
-  header_text: > #two or three lines to describe your site
-     <p>人生如戏，全靠演技</p>
-  header_text_feature_image: assets/img/pexels/computer2.jpeg
+  header_text: #two or three lines to describe your site 
+    <p>Keep studying, keep wise.</p>
+  header_text_feature_image: assets/img/feature/triangular.jpeg
   footer_text: Copyright 2018 Jackin 
    <p>Powered by <a href="https://jekyllrb.com/">Jekyll</a> with <a href="https://github.com/sylhare/Type-on-Strap">Type on Strap</a></p>
+
+  # Header for collections
+  collection_translations_header_text: <p>Those excellent articles you will enjoy</p>
 
   # Icons
   rss: true  # Make sure you created a feed.xml with feed.xml layout
@@ -47,10 +50,11 @@ theme_settings:
   google_analytics: "UA-117927654-1"
   disqus_shortname: liujq
   katex: true # Enable if using math markup
+  translations: true
   portfolio: true
   search: true
   tags: true
-  
+
   
   # Localization strings
   str_follow_on: "Follow on"
@@ -77,6 +81,10 @@ paginate_path: "blog/page:num"
 # PORTFOLIO
 collections:
   portfolio:
+    output: true
+    permalink: /:collection/:name
+
+  translations:
     output: true
     permalink: /:collection/:name
 

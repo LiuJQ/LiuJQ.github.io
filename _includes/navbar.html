@@ -19,6 +19,25 @@
     
     <!-- Menu -->
     <ul>
+        <!-- translations -->
+        {% if site.theme_settings.translations %}
+        <li>
+            <a class="clear" href="{{ site.url }}{{ site.baseurl }}/translations">
+                Translations
+            </a>
+        </li>
+        {% endif %}
+
+        <!-- portfolio -->
+        {% if site.theme_settings.portfolio %}
+        <li>
+            <a class="clear" href="{{ site.url }}{{ site.baseurl }}/portfolio">
+                Portfolio
+            </a>
+        </li>
+        {% endif %}
+
+        <!-- pages -->
         {% for page in site.pages %}
         {% if page.menu and page.hide != true %}
         <li>
@@ -28,13 +47,8 @@
         </li>
         {% endif %}
         {% endfor %} 
-        {% if site.theme_settings.portfolio %}
-        <li>
-            <a class="clear" href="{{ site.url }}{{ site.baseurl }}/portfolio">
-                Portfolio
-            </a>
-        </li>
-        {% endif %}
+
+        <!-- search -->
         {% if site.theme_settings.search %}
         <li>
             <a class="clear" href="{{ site.url }}{{ site.baseurl }}/search">
@@ -42,6 +56,8 @@
             </a>
         </li>
         {% endif %}
+
+        <!-- tags -->
         {% if site.theme_settings.tags %}
         <li>
             <a class="clear" href="{{ site.url }}{{ site.baseurl }}/tags">

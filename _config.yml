@@ -44,7 +44,7 @@ theme_settings:
   youtube:
 
   # Scripts / Features 
-  google_analytics: # Tracking ID, e.g. "UA-000000-01"
+  google_analytics: "UA-117927654-1"
   disqus_shortname: liujq
   katex: true # Enable if using math markup
   portfolio: true

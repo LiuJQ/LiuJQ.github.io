@@ -3,6 +3,7 @@ layout: post
 title: Android 多进程 -- 揭开神秘面纱
 subtitle: That moment when one Dalvik alone is no longer enough.
 tags: [Android, 多进程, Multi-Process]
+author: LiuJQ
 ---
 
 &emsp;&emsp;Android是基于Linux系统开发的移动操作系统。进程系统也是一脉相承，进程，其实就是应用程序的具体实现。当应用程序第一次启动，Android会启动创建一个进程（由Zygote fork而来）以及一个主线程，默认的情况下，所有组件都将运行在该进程内。每个应用程序都在其自己的进程中运行（具有唯一的PID）：这允许应用程序运行在一个独立的环境中，不会受到其他应用程序/进程的影响。

@@ -1,9 +1,9 @@
 ---
 layout: page
+menu: About
 title: About
 permalink: /about/
 feature-img: "assets/img/pexels/book-coffee.jpeg"
-tags: [About]
 ---
 
 ## Information

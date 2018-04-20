@@ -20,10 +20,10 @@
     <!-- Menu -->
     <ul>
         {% for page in site.pages %}
-        {% if page.title and page.hide != true %}
+        {% if page.menu and page.hide != true %}
         <li>
             <a class="clear" href="{{ page.url | relative_url }}">
-                {{ page.title }}
+                {{ page.menu }}
             </a>
         </li>
         {% endif %}

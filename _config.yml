@@ -5,7 +5,7 @@ url: "https://liujq.github.io"
 # THEME-SPECIFIC CONFIGURATION
 theme_settings:
   # Meta
-  title: Jackin Liu
+  title: "Jackin's Blog"
   avatar: assets/img/avatar.png
   favicon: assets/myfavicon.ico
   gravatar: 48B653DCAC99BBF259AE99FDC88E661B # Email MD5 hash

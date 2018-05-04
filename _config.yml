@@ -9,7 +9,7 @@ theme_settings:
   avatar: assets/img/avatar.png
   favicon: assets/favicon.ico
   gravatar: 48B653DCAC99BBF259AE99FDC88E661B # Email MD5 hash
-  description: "A website with blog posts and pages" # used by search engines
+  description: "A website with blog posts and pages about Android" # used by search engines
 
   # Header and footer text
   header_text: #two or three lines to describe your site 

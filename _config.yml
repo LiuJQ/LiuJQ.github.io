@@ -1,6 +1,6 @@
 # SITE CONFIGURATION
 baseurl: ""
-url: "https://liujq.github.io"
+url: "http://jackin.cn/"
 
 # THEME-SPECIFIC CONFIGURATION
 theme_settings:

@@ -74,10 +74,49 @@ public void problemMethod() {
 &emsp;&emsp;线程的使用在 Android 中也是司空见惯，如果处理不好线程的释放，也会导致FD泄露问题。
 ##### HandlerThread
 &emsp;&emsp;HandlerThread 是 Android 提供的异步任务处理线程类，结合 Handler 和 Runnable 使用可以实现大部分异步任务的处理工作。
+```java
+private void init() {
+    mThread = new HandlerThread("background-refresh-thread");
+    mThread.start();
+    mHandler = new Handler(mThread.getLooper());
+}
+
+private void destroy() {
+    if(mThread != null){
+        mThread.quitSafely();
+        mThread = null;
+    }
+    if(mHandler != null) {
+        mHandler.removeCallbacksAndMessages(null);
+        mHandler = null;
+    }
+}
+```
+&emsp;&emsp;上述的两个方法必须配套使用，否则会因为 Handler 中未处理完的消息回调造成内存泄漏以及 HandlerThread 没有及时释放导致FD泄漏。通常如果是在 Activity 中应用的话，在 onCreate 方法中调用 init, 在 onDestroy 方法中调用 destroy；如果是在 View 中使用的话，在 onAttachedToWindow 中调用 init，在 onDetachedFromWindow 中调用 destroy。
 ##### Thread
-
+&emsp;&emsp;HandlerThread 实际上是带有 Looper 的 Thread，而对于传统的 Java Thread，需要声明 Looper 以后才会出现FD的增加。因为声明 Looper 相当于增加了一块缓冲区，需要有一个FD来标识。如果反复调用下面这段代码也会出现FD泄漏。如果确定不需要 Looper，可以使用 Looper.quit() 或者 Looper.quitSafely() 来退出 Looper，避免出现FD泄漏。
+```java
+Thread thread = new Thread (new Runnable() {  
+    @Override  
+    public void run() {  
+        Looper.prepare();  
+        // do things  
+        Looper.loop();  
+    }  
+}).start();
+```
 #### Input Channel File
-
+##### WindowManager.addView
+&emsp;&emsp;WindowManager.addView 每次调用，都会在 server（WindowManagerService）和 Client(用户进程)端创建FD文件来作为 socket 通信，如果不调用 removeView 这个FD将得不到释放。事实上，如果 SystemServer 所在的进程的FD数量超过1024个，还会造成 Android 的重启。
+##### Multi-Task
+&emsp;&emsp;Activity 使用 Intent.FLAG_ACTIVITY_MULTIPLE_TASK 标识的时候，如果 Monkey 测试的时候该 Activity 被多次启动又没有及时销毁，则会导致FD泄漏问题。举个例子，写一封新邮件，startActivity 使用的 flag 是 multiTask，也就是说，每点击创建新的邮件都会创建task。而 Monkey 在跑的时候创建了n个邮件的 task， 而对应打开的 ComposeActivityEmail.java 的 “插入快速语” 会创建很多个fd，最终导致FD超过1024，进程崩溃。实际上，通过反复如下代码就会出现这个问题：
+```java
+Intent intent = new Intent();  
+Intent.addFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);  
+Intent.setClass(MainActivity.this, ComposeActivityEmail.class);  
+startActivity(intent);
+```
+&emsp;&emsp;应用的 input event 由 WindowManagerService 管理，WMS内部会创建一个 InputManager，两者通过 InputChannel 来完成，WMS需要注册两个 InputChannel 与 InputManager 连接，其中 Server 端 InputChannel 注册在 InputManager（SystemServer），Client 端注册在应用程序主线程中。InputChannel 使用 Ashmem 匿名共享内存来传递数据，它由一个FD文件描述符指向，同时 read 端和 write 端各占用一个FD。创建一个新的 Task 时，server(system_server) 和 client(app) 都会构建FD。所以设置为Intent.FLAG_ACTIVITY_MULTIPLE_TASK 类似 flag 的时候，如果没有处理好 Activity 的生命周期，可能会出现 system_server 进程先于应用进程到达FD上限，造成 Android 系统重启。
 ### 案例分析
 
 ### 结语

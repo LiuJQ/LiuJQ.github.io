@@ -183,7 +183,7 @@ grep 'SoundPoolThread' fd_threads.txt | wc -l
 
 &emsp;&emsp;在Android Studio中全局搜索工程目录，关键词是SoundPool。只有一个类ScrollTextView使用到，该类属于某个公共控件库，结合出现crash操作的Hybrid页面业务，我们定位到是选择日期的弹框控件使用到这个ScrollTextView控件（滚动选择日期时会播放跳动的声音）。
 
-&emsp;&emsp;我们研究了一下ScrollTextView的源码，发现了一个漏洞，它内部初始化SoundPool的时候是用线程加载的，在线程内部用一个bool值来标记初始化完成状态，然后在release的时候去判断这个bool值为true才执行SoundPoll的unload操作。用户在正常时候的场景下，该流程可能不会出现问题，但仔细琢磨一下就知道，**当用户点击调起选择日期弹框控件快速退出，SoundPool初始化线程仍在执行中，但由于线程没有执行完毕，bool值变量依然为false，此时release操作是不会执行的，因此导致了SoundPool load完后却未执行unload操作而出现句柄泄漏。**
+&emsp;&emsp;我们研究了一下ScrollTextView的源码，发现了一个漏洞，它内部初始化SoundPool的时候是用线程加载的，在线程内部用一个bool值来标记初始化完成状态，然后在release的时候去判断这个bool值为true才执行SoundPoll的unload操作。用户在正常时候的场景下，该流程可能不会出现问题，但仔细琢磨一下就知道，**当用户点击调起选择日期弹框控件快速退出，SoundPool初始化线程仍在执行中，但由于线程没有执行完毕，bool值变量依然为false，此时release操作是不会执行的，因此导致了SoundPool load完后却未执行unload操作而出现句柄泄露。**
 
 &emsp;&emsp;猜测终究还需要实践来验证。OK，既然我们已经知道什么场景导致了此次FD泄漏，那么我们就来重现一下问题发生的过程。打开相应业务Hybrid页面，快速点击选择日期弹框，再快速退出，然后通过adb在命令行终端查看此时应用的FD状态（可以看到多次快速点击弹框退出后确实出现了SoundPoolThread逐渐增加，此处不再列出截图）：
 ```bash

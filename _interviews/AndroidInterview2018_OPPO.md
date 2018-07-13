@@ -3,7 +3,7 @@
 ### Android应用启动优化
 > 1. Application尽量少操作；
 > 2. MainActivity主线程尽量少耗时操作；
-> 3. 延迟初始化必要服务，DecorateView.postDelay；
+> 3. 延迟初始化必要服务，DecorView.postDelay；
 
 ### 布局优化
 > 1. 尽量减少layout嵌套层级，merge/include/ViewStub；

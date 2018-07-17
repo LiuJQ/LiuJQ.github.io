@@ -118,3 +118,47 @@
 > TCP和UDP区别
 > > 1. TCP面向连接，可靠性高；
 > 2. UDP面向报文，无连接，不可靠，传输速率高；
+
+### HTTP URL请求过程
+> 1. DNS域名解析；
+> 2. TCP 3次握手；
+> 3. 建立TCP连接后发起HTTP请求；
+> 4. 服务器响应HTTP请求；
+> 5. 浏览器解析HTML；
+> 6. 浏览器渲染页面；
+
+### sleep VS wait
+> 1. sleep是Thread类定义的静态方法，wait是Object类定义的实例方法；
+> 2. wait方法必须在synchronize块中使用，wait方法会释放锁；
+> 3. sleep方法可以在线程中的任意位置使用，不释放锁；
+> 4. wait方法必须配合notify方法使用，用于多线程操作；
+> 5. sleep方法用于单线程休眠操作；
+
+### SharedPreference
+> 1. SP的get操作，会锁定SharedPreferences对象，互斥其他操作。
+> 2. SP的put操作，getEditor及commitToMemory会锁定SharedPreferences对象，put操作会锁定Editor对象，写入磁盘更会锁定一个写入锁
+>
+> IO性能优化建议
+> > 1. commit和apply的方法区别在于同步写入和异步写入，以及是否需要返回值。在不需要返回值的情况下，使用apply方法可以极大的提高性能。多个写入操作可以合并为一个commit/apply，将多个写入操作合并后也能提高IO性能。
+> > 2. 由于锁的缘故，SP操作并发时，耗时会徒增。减少锁耗时，是另一个优化点。由于读写操作的锁均是针对SP实例对象的，将数据拆分到不同的sp文件中，便是减少锁耗时的直接方案。降低单文件访问频率，多文件均摊访问，以减少锁耗时。
+
+### 普通for循环 VS 增强for循环
+> 1. 普通for循环按照下标顺序遍历；
+> 2. 增强for循环使用Iterator迭代遍历；
+> 3. 增强for循环在使用过程中不能对元素进行修改，否则会导致ConcurrentModificationException；
+> 4. 普通for循环更适用于数组类的数据结构遍历，增强for循环更适用于链表类数据结构遍历；
+
+### String, StringBuffer, StringBuilder
+> String的内部实现为final char[]，所以每次对现有的字符串修改的话都会新实例化一个String，所以频繁的字符串修改和拼接要用StringBuffer，在单线程环境下用StringBuilder，性能更好，因为可以避免加锁带来的性能损耗。
+
+### Dalvik VS ART
+> 1. Dalvik运行dex文件，支持即时编译，每次运行应用都需要将dex文件里的字节码转换成机器码；
+> 2. ART(Android Runtime)应用在第一次安装的时候，字节码就会预先编译成机器码，使其成为真正的本地应用。这个过程叫做预编译（AOT,Ahead-Of-Time）。这样的话，应用的启动(首次)和执行都会变得更加快速。
+>
+> > ART优点:
+> 1. 提高系统性能；
+> 2. 提高应用启动速度；
+>
+> > ART缺点:
+> 1. 机器码占用内存较高，导致应用安装后内存占用大；
+> 2. 应用安装时间变长；

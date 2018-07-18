@@ -1,4 +1,9 @@
-# Android 面经2018 -- 腾讯
+---
+layout: post
+title: Android 面经2018 -- Tencent
+author: Jackin
+tags: [Interview]
+---
 
 ### Hybrid文件上传速度优化
 > 文件压缩，关注Webkit内核上传速度优化

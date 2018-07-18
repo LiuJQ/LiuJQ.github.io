@@ -1,3 +1,10 @@
+---
+layout: post
+title: Android 面经2018 -- 大纲
+author: Jackin
+tags: [Interview]
+---
+
 ### Activity启动模式及应用场景
 > 1. standard 标准模式，每次启动都会创建实例放入栈中；
 > 2. singleTop 栈顶复用模式，适用于通知消息拉起的页面，登录页面等；
@@ -43,16 +50,16 @@
 > 1. 每一个进程启动时都会初始化一次Application，因此需要做好进程服务区分；
 > 2. SharedPreference不能用于IPC，因为SP拥有自己的缓存机制，文件更新不及时导致多线程不安全；
 > 3. SP文件在应用私有缓存目录，也不适用于跨应用的多进程。
-
+>
 > 应用场景
 > > 1. 相对独立模块；
 > 2. 需长时间后台运行的服务；
-
+>
 > 同应用IPC
 > > 1. Messenger；
 > 2. BroadCastReceiver；
 > 3. Intent/Bundle；
-
+>
 > 跨应用IPC
 > > 1. 四大组件传递Bundle；
 > 2. 共享文件；
@@ -84,10 +91,10 @@
 ### Touch事件分发
 > Touch事件类型
 > > MotionEvent.ACTION_DOWN<br>MotionEvent.ACTION_UP<br>MotionEvent.ACTION_MOVE<br>MotionEvent.ACTION_CANCEL
-
+>
 > Touch事件传递对象及流程
 > > Activity -> ViewGroup -> View
-
+>
 > Touch事件分发过程及相关方法
 > > 1. dispatchTouchEvent 点击事件能够传递给该View时，该方法会被调用；
 > 2. onTouchEvent 处理点击事件，在onDispatchTouchEvent内部调用；
@@ -96,11 +103,11 @@
 ### 数据结构
 > 如何判断链表有环？
 > > 快慢指针，一个指针每次走一步，另一个指针每次走两步，如果两个指针相遇，则链表有环
-
+>
 > 链表反转
 > > 1. 利用栈将链表元素依次入栈，然后逐个出栈
 > 2. 利用三个指针，两个用于反转，一个用于指向剩下的链表
-
+>
 > ArrayList/HashSet/LinkedList
 > > 1. HashSet元素无序且不重复，ArrayList元素有序可重复
 > 2. ArrayList轻量级，线程不安全，查询效率高，增删效率低；
@@ -109,12 +116,12 @@
 
 ### Http、TCP/IP、UDP
 > TCP/IP、UDP是传输层协议，Http是应用层数据封装协议
-
+>
 > TCP连接3次握手
 > > 1. Client发起SYNC到Server，并设置状态为SYN_SEND；
 > 2. Server收到SYNC后回复给Client，并设置状态为SYN_RECV；
 > 3. Client收到Server的回复，并设置状态为ESTABLISHED；
-
+>
 > TCP和UDP区别
 > > 1. TCP面向连接，可靠性高；
 > 2. UDP面向报文，无连接，不可靠，传输速率高；

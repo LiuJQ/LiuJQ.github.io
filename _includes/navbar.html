@@ -37,6 +37,15 @@
         </li>
         {% endif %}
 
+        <!-- interviews -->
+        {% if site.theme_settings.interviews %}
+        <li>
+            <a class="clear" href="{{ site.url }}{{ site.baseurl }}/interviews">
+                Interviews
+            </a>
+        </li>
+        {% endif %}
+
         <!-- pages -->
         {% for page in site.pages %}
         {% if page.menu and page.hide != true %}

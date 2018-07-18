@@ -1,4 +1,9 @@
-# Android 面经2018 -- 百度
+---
+layout: post
+title: Android 面经2018 -- Baidu
+author: Jackin
+tags: [Interview]
+---
 
 ### View绘制流程
 > onMeasure/onLayout/onDraw

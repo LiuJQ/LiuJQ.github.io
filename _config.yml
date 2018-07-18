@@ -20,6 +20,7 @@ theme_settings:
 
   # Header for collections
   collection_translations_header_text: <p>Those excellent articles you will enjoy</p>
+  collection_interviews_header_text: <p>Always Standby</p>
 
   # Icons
   rss: true  # Make sure you created a feed.xml with feed.xml layout
@@ -50,6 +51,7 @@ theme_settings:
   google_analytics: "UA-117927654-1"
   disqus_shortname: liujq
   katex: true # Enable if using math markup
+  interviews: true
   translations: true
   portfolio: true
   search: true
@@ -78,13 +80,19 @@ theme_settings:
 paginate: 5
 paginate_path: "blog/page:num"
 
-# PORTFOLIO
 collections:
+  # Portfolio
   portfolio:
     output: true
     permalink: /:collection/:name
 
+  # Translations
   translations:
+    output: true
+    permalink: /:collection/:name
+ 
+  # Interviews
+  interviews:
     output: true
     permalink: /:collection/:name
 

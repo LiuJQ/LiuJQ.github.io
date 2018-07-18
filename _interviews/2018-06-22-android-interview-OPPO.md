@@ -1,4 +1,9 @@
-# Android 面经2018 -- OPPO
+---
+layout: post
+title: Android 面经2018 -- OPPO
+author: Jackin
+tags: [Interview]
+---
 
 ### Android应用启动优化
 > 1. Application尽量少操作；

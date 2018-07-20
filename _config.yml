@@ -50,7 +50,7 @@ theme_settings:
   google_analytics: "UA-117927654-1"
   disqus_shortname: liujq
   katex: true # Enable if using math markup
-  interviews: false
+  interviews: true
   translations: true
   portfolio: true
   search: true

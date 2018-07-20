@@ -169,3 +169,53 @@ tags: [Interview]
 > > ART缺点:
 > 1. 机器码占用内存较高，导致应用安装后内存占用大；
 > 2. 应用安装时间变长；
+
+### 死锁
+> 死锁的必要条件
+> > 1. 互斥条件：一个资源每次只能被一个进程使用。
+> > 2. 占有且等待：一个进程因请求资源而阻塞时，对已获得的资源保持不放。
+> > 3. 不可强行占有:进程已获得的资源，在末使用完之前，不能强行剥夺。
+> > 4. 循环等待条件:若干进程之间形成一种头尾相接的循环等待资源关系。
+
+### HTTP
+> 公共头部
+>
+  字段 | 说明
+  :---: | :---:
+  Remote Address | 请求的远程地址
+  Request URL | 请求的域名
+  Request Method | 页面请求的方式，如GET/POST
+  Status Code | 请求的返回状态
+> Request Header
+>
+  字段 | 说明
+  :---: | :---:
+  Accept | 浏览器支持的 MIME 类型
+  Accept-Encoding | 浏览器支持的压缩类型
+  Accept-Language | 浏览器支持的语言类型
+  Cache-Control | 指定请求和响应遵循的缓存机制
+  Connection | 当浏览器与服务器通信时对于长连接如何进行处理：close/keep-alive
+  Cookie | 向服务器返回cookie，这些cookie是之前服务器发给浏览器的
+  Host | 请求的服务器URL
+  Referer | 跳转页面的来源URL
+  User-Agent | 客户端的一些必要信息
+> Response Header
+>
+  字段 | 说明
+  :---: | :---:
+  Cache-Control | 告诉浏览器或者其他客户，什么环境可以安全地缓存文档
+  Connection | 当client和server通信时对于长链接如何进行处理
+  Content-Encoding | 数据在传输过程中所使用的压缩编码方式
+  Content-Type | 数据的类型
+  Date | 数据从服务器发送的时间
+  Expires | 指定此次响应的有效期时间
+  Set-Cookie | 设置和页面关联的cookie
+  Transfer-Encoding | 数据传输的方式，chunked/identity
+
+### HTTPS加密通信流程
+> 1. 客户端向服务端发送请求
+> 2. 服务端返回数字证书
+> 3. 客户端用自己的CA[主流的CA机构证书一般都内置在各个主流浏览器中]公钥去解密证书,如果证书有问题会提示风险
+> 4. 如果证书没问题客户端会生成一个对称加密的随机秘钥然后再和刚刚解密的服务器端的公钥对数据进行加密,然后发送给服务器端
+> 5. 服务器端收到以后会用自己的私钥对客户端发来的对称秘钥进行解密
+> 6. 之后双方就拿着这个对称加密秘钥来进行正常的通信

@@ -1,3 +1,10 @@
+---
+layout: post
+title: MGB SDK 参考文档
+author: Jackin
+tags: [MGB-SDK]
+---
+
 <!-- TOC depthFrom:1 depthTo:6 withLinks:1 updateOnSave:1 orderedList:0 -->
 
 	- [修订记录](#修订记录)

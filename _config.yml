@@ -95,6 +95,11 @@ collections:
     output: true
     permalink: /:collection/:name
 
+  # Docs
+  docs:
+    output: true
+    permalink: /:collection/:name
+
 # BUILD SETTINGS
 markdown: kramdown
 highlighter: rouge

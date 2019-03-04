@@ -15,6 +15,6 @@ feature-img: "assets/img/pexels/book-coffee.jpeg"
 **Collage:** South China Agricultural University
 
 ## Status Now
-#### Meizu
-Android developer<br>
-Zhuhai, GuangDong, China.
+#### Cheetah
+Android / Instant Game<br/>
+Zhuhai, China.

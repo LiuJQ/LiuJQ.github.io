@@ -1,0 +1,39 @@
+<!-- docs collection -->
+<div class="docs">
+  {% if site.theme_settings.collection_docs_header_text %}
+  <div id="main" class="call-out"
+  style="background-image: url('{{ site.baseurl }}/{{ site.theme_settings.collection_docs_feature_image }}')">
+   <h3>{{ site.theme_settings.collection_docs_header_text }}</h3>
+  </div>
+  {% endif %}
+
+  <div class="posts">
+    {% for post in site.docs %}
+    <div class="post-teaser">
+      {% if post.thumbnail %}
+      <div class="post-img">
+         <img src="{{ site.baseurl }}/{{ post.thumbnail }}">
+      </div>
+      {% endif %}
+      <span>
+          <header>
+            <h2>
+              <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">
+                {{ post.title }}
+              </a>
+            </h2>
+            <p class="meta">
+              {{ post.date | date: "%B %-d, %Y" }}
+            </p>
+          </header>
+          <div class="excerpt">
+            {{ post.content | strip_html | truncate: "250" }}
+            <!--<a class="button" href="{{ post.url | prepend: site.baseurl }}">
+              {{ site.theme_settings.str_continue_reading }}
+            </a>-->
+          </div>
+      </span>
+    </div>
+    {% endfor %}
+  </div>
+</div>

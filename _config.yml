@@ -12,7 +12,7 @@ theme_settings:
   description: "A website with blog posts and pages about Android" # used by search engines
 
   # Header and footer text
-  header_text: #two or three lines to describe your site 
+  header_text: #two or three lines to describe your site
     <p>Keep studying, keep wise.</p>
   header_text_feature_image: assets/img/feature/triangular.jpeg
   footer_text: Copyright@ 2018 Jackin | Powered by <a href="https://jekyllrb.com/">Jekyll</a> with <a href="https://github.com/sylhare/Type-on-Strap">Type on Strap</a>
@@ -20,6 +20,8 @@ theme_settings:
   # Header for collections
   collection_translations_header_text: <p>Those excellent articles you will enjoy</p>
   collection_interviews_header_text: <p>Always Standby</p>
+  collection_docs_header_text: <p>Predecessors plant trees, future generations enjoy the cool</p>
+  collection_docs_feature_image: assets/img/pexels/disco-full.jpeg
 
   # Icons
   rss: true  # Make sure you created a feed.xml with feed.xml layout
@@ -46,17 +48,18 @@ theme_settings:
   wordpress:
   youtube:
 
-  # Scripts / Features 
+  # Scripts / Features
   google_analytics: "UA-117927654-1"
   disqus_shortname: liujq
   katex: true # Enable if using math markup
-  interviews: false
+  docs: true
+  interviews: true
   translations: true
   portfolio: true
   search: true
   tags: true
 
-  
+
   # Localization strings
   str_follow_on: "Follow on"
   str_rss_follow: "Follow RSS feed"
@@ -89,7 +92,7 @@ collections:
   translations:
     output: true
     permalink: /:collection/:name
- 
+
   # Interviews
   interviews:
     output: true

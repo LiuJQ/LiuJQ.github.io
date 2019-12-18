@@ -1,5 +1,5 @@
 <header class="site-header">
-    
+
     <!-- Logo and title -->
 	<div class="branding">
 		<a href="{{ site.baseurl }}/">
@@ -10,29 +10,29 @@
 			<a href="{{ site.baseurl }}/">{{ site.theme_settings.title }}</a>
 		</h1>
 	</div>
-    
+
     <!-- Toggle menu -->
     <nav class="clear">
     <a id="pull" class="toggle" href="#">
     <i class="fa fa-bars fa-lg"></i>
     </a>
-    
+
     <!-- Menu -->
     <ul>
+        <!-- docs -->
+        {% if site.theme_settings.docs %}
+        <li>
+            <a class="clear" href="{{ site.url }}{{ site.baseurl }}/docs">
+                Docs
+            </a>
+        </li>
+        {% endif %}
+
         <!-- translations -->
         {% if site.theme_settings.translations %}
         <li>
             <a class="clear" href="{{ site.url }}{{ site.baseurl }}/translations">
                 Translations
-            </a>
-        </li>
-        {% endif %}
-
-        <!-- portfolio -->
-        {% if site.theme_settings.portfolio %}
-        <li>
-            <a class="clear" href="{{ site.url }}{{ site.baseurl }}/portfolio">
-                Portfolio
             </a>
         </li>
         {% endif %}
@@ -46,6 +46,15 @@
         </li>
         {% endif %}
 
+				<!-- portfolio -->
+        {% if site.theme_settings.portfolio %}
+        <li>
+            <a class="clear" href="{{ site.url }}{{ site.baseurl }}/portfolio">
+                Portfolio
+            </a>
+        </li>
+        {% endif %}
+
         <!-- pages -->
         {% for page in site.pages %}
         {% if page.menu and page.hide != true %}
@@ -55,7 +64,7 @@
             </a>
         </li>
         {% endif %}
-        {% endfor %} 
+        {% endfor %}
 
         <!-- search -->
         {% if site.theme_settings.search %}
@@ -74,8 +83,8 @@
             </a>
         </li>
         {% endif %}
-        
+
     </ul>
-        
+
 	</nav>
 </header>

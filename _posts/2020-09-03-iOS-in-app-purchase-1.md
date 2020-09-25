@@ -7,7 +7,8 @@ tags: [iOS, IAP, Swift]
 ---
 
 > 提及iOS IAP，各位开发者可能心里都有一万只草泥马，实在太多坑。
->> 本系列文章实践环境: iOS 13 / Swift 5 / Xcode 11.3.1
+>
+> *本系列文章实践环境: **iOS 13 / Swift 5 / Xcode 11.3.1***
 
 ## 简介
 IAP 全称：In-App Purchase，是指苹果 App Store 的应用内购买，是苹果为 App 内购买虚拟商品或服务提供的一套交易系统。

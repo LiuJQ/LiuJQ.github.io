@@ -100,20 +100,172 @@ class IAPHandler: NSObject {
     ...
     override init() {
         super.init()
+        // Attach an observer to the payment queue.
         SKPaymentQueue.default().add(self)
     }
 
     deinit {
+        // Remove the observer.
         SKPaymentQueue.default().remove(self)
     }
     ...
 }
 
 //MARK:- Implement Payment Transaction Observer
+//Observe transaction updates.
 extension IAPHandler: SKPaymentTransactionObserver {
     func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
+      //Handle transaction states here.
       ...
     }
 }
 ```
-在我们的单例`PayApi`中创建`IAPHandler`的实例，即可使Observer保持存在于整个App生命周期中。
+在我们的单例`PayApi`中创建`IAPHandler`的实例，即可使Observer持续存在于整个App生命周期中。
+```swift
+class PayApi {
+    private static let instance = {
+        return CFPayApi()
+    }()
+
+    private init() {}
+
+    class func shared() -> CFPayApi {
+        return instance
+    }
+
+    ...
+
+    fileprivate let iapHandler: IAPHandler = IAPHandler()
+
+    ...
+}
+```
+**在应用启动时初始化并添加交易数据观察者是非常重要的**，这样可以确保它在应用程序所有启动期间持续存在，接收所有付款队列通知并继续在应用程序外部可能处理的交易，例如：
+- 推广应用内购买
+- 后台订阅续订
+- 购买中断
+```swift
+class AppDelegate: UIResponder, UIApplicationDelegate {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+      ...
+      PayApi.shared()
+      ...
+    }
+}
+```
+
+## 提供、完成和恢复应用内购买
+### 展示可用本地化定价出售的产品
+在展示可售产品之前，可以先判断当前用户是否被授权可以在该设备上进行交易
+```swift
+var isAuthorizedForPayments: Bool {
+    return SKPaymentQueue.canMakePayments()
+}
+```
+App确认授权后，就会向App Store发送产品请求，以从App Store获取本地化的产品信息。查询App Store可确保该App仅向用户显示可购买的产品。
+```swift
+fileprivate func fetchProducts(matchingIdentifiers identifiers: [String]) {
+    // Create a set for the product identifiers.
+    let productIdentifiers = Set(identifiers)
+
+    // Initialize the product request with the above identifiers.
+    productRequest = SKProductsRequest(productIdentifiers: productIdentifiers)
+    productRequest.delegate = self
+
+    // Send the request to the App Store.
+    productRequest.start()
+}
+```
+我们将在`IAPHandler`中实现产品请求回调代理协议，App Store使用`SKProductsResponse`对象响应产品请求。其产品属性包含有关可在App Store中实际购买的所有产品的信息。
+```swift
+extension IAPHandler: SKProductsRequestDelegate {
+    func productsRequest (_ request:SKProductsRequest, didReceive response:SKProductsResponse) {
+        if (response.products.count > 0) {
+            response.products.forEach { product in
+                LogUtil.d(tag: TAG, msg: "Valid product: \(product)")
+                self.products[product.productIdentifier] = product
+            }
+        }
+        if let complition = self.fetchProductComplition {
+            complition(response.products)
+        }
+    }
+}
+```
+### 发起产品购买
+一旦我们通过product_id查询到合法的本地化可购买产品信息之后，即可通过`SKPaymentQueue`发起一笔购买交易。
+```swift
+func purchase(product: SKProduct, complition: @escaping ((IAPHandlerAlertType, SKProduct?, SKPaymentTransaction?)->Void)) -> Void {
+    self.purchaseProductComplition = complition
+    self.productToPurchase = product
+    guard self.productToPurchase != nil else {
+        complition(IAPHandlerAlertType.invalidProduct, nil, nil)
+        return
+    }
+
+    if self.isAuthorizedForPayments {
+        let payment = SKPayment(product: product)
+        SKPaymentQueue.default().add(payment)
+        LogUtil.d(tag: TAG, msg: "PRODUCT TO PURCHASE: \(product.productIdentifier)")
+    } else {
+        complition(IAPHandlerAlertType.disabled, nil, nil)
+        LogUtil.w(tag: TAG, msg: "In App Purchase disabled by User")
+    }
+}
+```
+
+### 处理付款交易状态
+当付款队列中有待处理的交易时，StoreKit会通过调用App的`paymentQueue（_：updatedTransactions :)`方法来通知应用的交易观察者。App应确保其观察者的`paymentQueue（_：updatedTransactions :)`可以随时响应任何一种状态。
+```swift
+func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
+    for transaction: SKPaymentTransaction in transactions {
+        switch transaction.transactionState {
+        case .purchased:
+            // The purchase was successful.
+            completeTransaction(transaction)
+        case .failed:
+            // The transaction failed.
+            failedTransaction(transaction)
+        case .restored:
+            // There're restored products.
+            restoreTransaction(transaction)
+        case .purchasing:
+        case .deferred:
+            // Do not block the UI. Allow the user to continue using the app.
+        @unknown default:
+        }
+    }
+}
+```
+当transaction failed时，检查其error属性以确定发生了什么。仅显示SKError#code与paymentCancelled不同的错误。
+```swift
+// Do not send any notifications when the user cancels the purchase.
+if (transaction.error as? SKError)?.code != .paymentCancelled {
+    DispatchQueue.main.async {
+        // UI线程展示错误信息
+        self.delegate?.storeObserverDidReceiveMessage(message)
+    }
+}
+```
+
+### 恢复已完成的购买
+当用户购买非消耗品，自动更新订阅或非更新订阅时，他们希望它们可以在所有设备上无限期可用。App需提供一个UI交互，允许用户恢复其过去的购买记录。
+```swift
+func restorePurchase(_ callback: ((Bool, SKPaymentTransaction?) ->Void)?) -> Void {
+    self.restorePayComplition = callback
+    SKPaymentQueue.default().add(self)
+    SKPaymentQueue.default().restoreCompletedTransactions()
+}
+```
+
+### 提供内容并完成交易
+&emsp;&emsp;在收到状态为`.purchased`或`.restored`的交易后，应用必须交付内容或解锁购买的功能。这些状态表明App Store已从用户处收到产品付款。
+
+&emsp;&emsp;未完成的交易留在付款队列中。每当从后台启动或从后台恢复运行时，StoreKit都会调用该应用程序的永久观察者的`paymentQueue（_：updatedTransactions :)`，直到该应用程序完成这些交易为止。因此，App Store可能会反复提示用户对他们的购买进行身份验证或阻止他们从该应用程序再次购买产品。
+
+&emsp;&emsp;对状态为`.failed`，`.purchased`或`.restored`的transaction调用`finishTransaction（_ :)`以将其从队列中删除。已完成的交易无法恢复，**因此应用程序必须提供购买的内容、下载产品的所有Apple托管内容或完成产品购买过程，然后才能调用`finishTransaction（_ :)`完成交易。**
+
+```swift
+// Finish the successful transaction.
+SKPaymentQueue.default().finishTransaction(transaction)
+```

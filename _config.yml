@@ -53,7 +53,7 @@ theme_settings:
   disqus_shortname: liujq
   katex: true # Enable if using math markup
   docs: true
-  interviews: true
+  interviews: false
   translations: true
   portfolio: true
   search: true

@@ -3,6 +3,7 @@ layout: post
 title: Flutter原生广告优化 -- 点击穿透
 subtitle: Flutter UiKitView 接入头条原生模版信息流广告，出现点击穿透问题，如何解决？
 tags: [Flutter, 穿山甲, 头条, iOS信息流广告, 点击穿透]
+mermaid: true
 ---
 
 > 本文默认以iOS平台开发示例，以下不再赘述
@@ -11,7 +12,7 @@ tags: [Flutter, 穿山甲, 头条, iOS信息流广告, 点击穿透]
 
 ## Flutter 如何接入头条原生广告
 
-头条SDK提供的原生模版广告是基于iOS平台的UIView（对应Android平台View），Flutter页面渲染通常是Widget树，因此如果要在Flutter中接入原生广告，就必须采用 Platform Views 的方式实现。（这里提供对于Flutter接入原生View不太熟悉的读者传送门：[Hosting native Android and iOS views](https://flutter.dev/docs/development/platform-integration/platform-views)）
+头条SDK提供的原生模版广告是基于iOS平台的`UIView`（对应Android平台`View`），Flutter 页面渲染通常是`Widget`树，因此如果要在 Flutter 中接入原生广告，就必须采用 Platform Views 的方式实现。（这里提供对于 Flutter 接入原生`View`不太熟悉的读者传送门：[Hosting native Android and iOS views](https://flutter.dev/docs/development/platform-integration/platform-views)）
 
 * 提供`FlutterPlatformView`接口实现类
 
@@ -60,7 +61,7 @@ tags: [Flutter, 穿山甲, 头条, iOS信息流广告, 点击穿透]
   }
   ```
 
-* 提供原生广告View
+* 提供原生广告`View`
 
   ```swift
   class BUSdkNativeAd: NSObject, BaseNativeEntity {
@@ -107,15 +108,15 @@ tags: [Flutter, 穿山甲, 头条, iOS信息流广告, 点击穿透]
 
 ## 原生广告如何渲染
 
-头条广告原生View以`PlatformView`方式嵌入到 Flutter Widget树中展示时，Flutter 是怎么展示的呢？我们通过查看 Flutter 源码和实际使用案例的原生View层级两方面来看看。
+头条广告原生`View`以`PlatformView`方式嵌入到 Flutter `Widget`树中展示时，Flutter 是怎么展示的呢？我们通过查看 Flutter 源码和实际使用案例的原生`View`层级两方面来看看。
 
 **Flutter 源码简析**
 
-首先我们定位到 Flutter 源码关于`PlatformView`的实现类，看看dart层创建一个`UiKitView`时，Flutter 是如何创建对应的原生View的。
+首先我们定位到 Flutter 源码关于`PlatformView`的实现类，看看dart层创建一个`UiKitView`时，Flutter 是如何创建对应的原生`View`的。
 
 从`FlutterViewController`创建入口开始，我们可以跟踪到`FlutterPlatformViewsController`实例是`FlutterEngine`的成员，用于管理所有`PlatformView`的添加移除，位置大小，层级顺序。 dart层的一个`UiKitView`都会对应到 native 层的一个`PlatformView`，两者通过持有相同的 viewid 进行关联，每次创建一个新`PlatformView`时，viewid++。
 
-```c++
+```objc
 NSObject<FlutterPlatformView>* embedded_view = [factory createWithFrame:CGRectZero
                                                            viewIdentifier:viewId
                                                                 arguments:params];
@@ -139,7 +140,18 @@ ChildClippingView* clipping_view =
 root_views_[viewId] = fml::scoped_nsobject<UIView>([clipping_view retain]);
 ```
 
-通过源码我们得知，Flutter 创建 `PlatformView`时，同时会创建`FlutterTouchInterceptingView`和`ChildClippingView`，它们之间的层级关系是`ChildClippingView`-->`FlutterTouchInterceptingView`-->`PlatformView`。`FlutterTouchInterceptingView`的作用是拦截或传递原生View的手势事件，引述官方文档的描述是：
+通过源码我们得知，Flutter 创建 `PlatformView`时，同时会创建`FlutterTouchInterceptingView`和`ChildClippingView`，它们之间的层级关系是：
+
+<div class="language-mermaid" align="center">
+    graph LR       
+    ChildClippingView-->|contains|FlutterTouchInterceptingView-->|contains|PlatformView
+</div>
+
+<div align="center">
+  <label width="50%" textAlignment="left" style="color: #B3B3B3; font-size: 0.8rem">PlatformView层级关系</label>
+</div>
+
+<br/>`FlutterTouchInterceptingView`的作用是拦截或传递原生View的手势事件，引述官方文档的描述是：
 
 > A UIView that is used as the parent for embedded UIViews.
 >
@@ -169,7 +181,7 @@ root_views_[viewId] = fml::scoped_nsobject<UIView>([clipping_view retain]);
 
 由上面的iOS View Tree图我们知道，当 Flutter Application 启动后，会展示一个 `FlutterViewController`，而`FlutterViewController`的 root view 是一个 `FlutterView`，所有的Widget Tree对应的layer都是渲染在`FlutterView`上的。
 
-原生广告也是一个原生UIView，按照我们看到的View层级，理论上如果添加了原生广告，原生广告UIView和FlutterView`重叠的部分Widget layer应该是不可见的，然而现在它们确实可见的，而且还可以响应触摸事件，是不是很神奇？
+原生广告也是一个原生`UIView`，按照我们看到的View层级，理论上如果添加了原生广告，原生广告`UIView`和`FlutterView`重叠的部分Widget layer应该是不可见的，然而现在它们确实可见的，而且还可以响应触摸事件，是不是很神奇？
 
 **FlutterOverlayView**
 

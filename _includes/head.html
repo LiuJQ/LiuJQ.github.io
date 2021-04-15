@@ -34,8 +34,7 @@
     <!--<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.8.3/katex.min.css">
     <script src="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.8.3/katex.min.js"></script> -->
     <link rel="stylesheet" type="text/css" href="{{ site.baseurl }}/assets/css/katex.min.css">
-    <script src="{{ site.baseurl }}/assets/js/katex.min.js">
-    </script>
+    <script src="{{ site.baseurl }}/assets/js/katex.min.js"></script>
     {% endif %}
 
     <!-- Google Analytics -->
@@ -56,6 +55,28 @@
         ga('create', '{{ site.theme_settings.google_analytics }}', 'auto');
         ga('send', 'pageview');
 
+    </script>
+    {% endif %}
+
+    <!--Mermaid 8.9.2-->
+    {% if page.mermaid %}
+    <script>
+        function initMermaid() {
+          var config = {
+            startOnLoad: true,
+            theme: "base",
+            flowchart:{
+              useMaxWidth: true,
+              htmlLabels: true
+            }
+          };
+          mermaid.initialize(config);
+          window.mermaid.init(undefined, document.querySelectorAll('.language-mermaid'));
+        }
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/8.9.2/mermaid.min.js"
+        async="true"
+        onload="initMermaid()">
     </script>
     {% endif %}
     

@@ -4,6 +4,7 @@ title: Flutter原生广告优化 -- 点击穿透
 subtitle: Flutter UiKitView 接入头条原生模版信息流广告，出现点击穿透问题，如何解决？
 tags: [Flutter, 穿山甲, 头条, iOS信息流广告, 点击穿透]
 mermaid: true
+author: Jackin
 ---
 
 > 本文默认以iOS平台开发示例，以下不再赘述

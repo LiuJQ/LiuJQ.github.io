@@ -2,6 +2,7 @@
 layout: post
 title: Flutter 2.0.6 升级踩坑记录
 tags: [Flutter 2, 升级flutter2，踩坑]
+author: Jackin
 ---
 
 > 本次升级环境为 flutter 1.22.x 升级到 flutter 2.0.6，不涉及 dart sdk 和空安全升级

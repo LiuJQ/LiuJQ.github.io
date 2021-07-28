@@ -4,6 +4,7 @@ title: iOS In-App Purchase -- 实践
 subtitle: iOS In-App Purchase coding
 feature-img: "assets/img/iOS/iap_crop.png"
 tags: [iOS, IAP, Swift]
+author: Jackin
 ---
 
 > 提及iOS IAP，各位开发者可能心里都有一万只草泥马，实在太多坑。

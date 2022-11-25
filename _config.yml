@@ -50,6 +50,7 @@ theme_settings:
 
   # Scripts / Features
   google_analytics: "UA-117927654-1"
+  google_ga4_measurementId: "G-FPPPMX2WPB"
   disqus_shortname: liujq
   katex: true # Enable if using math markup
   docs: true

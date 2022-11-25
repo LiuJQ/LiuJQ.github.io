@@ -55,6 +55,19 @@
         ga('create', '{{ site.theme_settings.google_analytics }}', 'auto');
         ga('send', 'pageview');
 
+    </script>    
+    {% endif %}
+
+
+    <!-- Google tag (gtag.js) -->
+    {% if site.theme_settings.google_ga4_measurementId %}
+    <script async src="https://www.googletagmanager.com/gtag/js?id={{ site.theme_settings.google_ga4_measurementId }}"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', '{{ site.theme_settings.google_ga4_measurementId }}');
     </script>
     {% endif %}
 
